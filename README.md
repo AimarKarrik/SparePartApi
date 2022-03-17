@@ -1,4 +1,4 @@
-# Varuosade-API
+# Sparepart-API
 Hajusrakendused
 
 Harjutus 3 - Varuosade API 
