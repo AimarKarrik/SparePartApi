@@ -2,12 +2,14 @@ import json
 import csv
 import os
 
+
+    #LE.csv on liiga suuur et funkeda pls leia tee kuidas hakkida
 def make_json():
     csvFilePath = r'data/DemoData.csv'
-    jsonFilePath = r'data/demoData.json'
+    jsonFilePath = r'data/DemoData.json'
 
     if (os.path.exists('data/demoData.json') == True):
-        os.remove('data/demoData.json')
+        os.remove('data/DemoData.json')
 
     # create a dictionary
     data = {}
@@ -30,8 +32,8 @@ def make_json():
     with open(jsonFilePath, 'w', encoding='utf-8') as jsonf:
         jsonf.write(json.dumps(data, indent=4))
 
-    PartsData = open('data/demoData.json')
-    PartsData = json.load(PartsData)
-    return PartsData
+    #PartsData = open('data/demoData.json')
+    #PartsData = json.load(PartsData)
+    #return PartsData
 
 print(make_json())
