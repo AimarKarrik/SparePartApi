@@ -1,37 +1,37 @@
-[
-  {
-    "id": 0,
-    "Type": "Esiklaas",
-    "serialNumber": "10245A",
-    "manufacturer": "BMW",
-    "carModel": "X6"
-  },
-  {
-    "id": 1,
-    "Type": "Käigukast",
-    "serialNumber": "B59125",
-    "manufacturer": "Mercedes-Benz",
-    "carModel": "A-Class"
-  },
-  {
-    "id": 2,
-    "Type": "Peegel",
-    "serialNumber": "G51023",
-    "manufacturer": "Volvo",
-    "carModel": "C70"
-  },
-  {
-    "id": 3,
-    "Type": "Esiklaas",
-    "serialNumber": "D62345",
-    "manufacturer": "Wolkswagen",
-    "carModel": "Golf"
-  },
-  {
-    "id": 4,
-    "Type": "Generator",
-    "serialNumber": "G20312",
-    "manufacturer": "Dacia",
-    "carModel": "Duster"
-  }
-]
+{
+    "1": {
+        "Id": "1",
+        "Manufacturer": "BMW",
+        "Model": "X6",
+        "PartName": "Esiklaas",
+        "SerialNumber": "E12431"
+    },
+    "2": {
+        "Id": "2",
+        "Manufacturer": "Volkswagen",
+        "Model": "Golf",
+        "PartName": "Generaator",
+        "SerialNumber": "G73455"
+    },
+    "3": {
+        "Id": "3",
+        "Manufacturer": "Volvo",
+        "Model": "C70",
+        "PartName": "Tulekuunal",
+        "SerialNumber": "T86557"
+    },
+    "4": {
+        "Id": "4",
+        "Manufacturer": "Mercedes-Benz",
+        "Model": "A-Class",
+        "PartName": "Esi Ukseklaas",
+        "SerialNumber": "K12965"
+    },
+    "5": {
+        "Id": "5",
+        "Manufacturer": "Dacia",
+        "Model": "Duster",
+        "PartName": "Esituli",
+        "SerialNumber": "TI5653"
+    }
+}
