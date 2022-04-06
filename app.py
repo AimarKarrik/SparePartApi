@@ -1,6 +1,8 @@
 print("API starting...")
 
 # app.py
+# To start the api put this into the console: python -m flask run
+
 from flask import Flask, request, jsonify
 import json
 import csv
@@ -10,11 +12,11 @@ app = Flask(__name__)
 
 
 def make_parts():
-    csvFilePath = r'data/DemoData.csv'
-    jsonFilePath = r'data/demoData.json'
+    csvFilePath = r'data/LE.csv'
+    jsonFilePath = r'data/Le.json'
 
-    if (os.path.exists('data/demoData.json') == True):
-        os.remove('data/demoData.json')
+    if (os.path.exists('data/Le.json') == True):
+        os.remove('data/Le.json')
 
     # create a dictionary
     data = {}
@@ -22,7 +24,7 @@ def make_parts():
     # Open a csv reader called DictReader
     with open(csvFilePath, encoding='utf-8') as csvf:
         csvReader = csv.DictReader(csvf)
-         
+        print("Conversion CSV to JSON in progress")
         # Convert each row into a dictionary
         # and add it to data
         for rows in csvReader:
@@ -37,7 +39,8 @@ def make_parts():
     with open(jsonFilePath, 'w', encoding='utf-8') as jsonf:
         jsonf.write(json.dumps(data, indent=4))
 
-    PartsData = open('data/demoData.json')
+    print("Conversion finished")
+    PartsData = open('data/Le.json')
     PartsData = json.load(PartsData)
     return PartsData
 
