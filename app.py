@@ -1,7 +1,8 @@
 # app.py
 from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 import json, csv, os, pandas
+from numpy import argsort
 
 
 
@@ -21,16 +22,20 @@ def get_csv_convert_to_dict(csv_file_path,):
 
 csv_file_path = r'data/LE.csv'
 
+sort_by_args = reqparse.RequestParser()
+sort_by_args.add_argument("Field", type=str, help="The field that you want to sort by.")
+sort_by_args.add_argument("Decending", type=bool, help="Is the sort decending")
 
-class get_part_by_id(Resource):
-    def get(self, property, decending):
+class sort_by(Resource):
+    def get(self):
         
         all_parts = get_csv_convert_to_dict(csv_file_path)
+        args = sort_by_args.parse_args()
 
-        sorted_parts = sorted(all_parts, key=lambda d: d[property], reverse=decending)
-        return sorted_parts, 200
+        sorted_parts = sorted(all_parts, key=lambda d: d[property], reverse=True)
+        return args , 200
 
-api.add_resource(get_part_by_id, '/sortby/<string:property>/<bool:decending>')
+api.add_resource(sort_by, '/sortby')
 
 
 
