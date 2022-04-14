@@ -2,7 +2,6 @@
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 import json, csv, pandas
-from numpy import argsort
 
 
 
@@ -30,11 +29,20 @@ class parts(Resource):
         search = request.args.get("search", type = str, default = "")
         sort_by = request.args.get("sort_by", type = str, default = "name")
         decending = request.args.get("decending", type = bool, default = False)
+        page = request.args.get("page",type = int, default = 0)
+        page_size = request.args.get("page_size",type = int,default = 5)
+
+        if page_size > 20:
+            return 'Page size too large', 400
+
+
+        if not(search_by == "name" or search_by == "serial" or search_by == "manufacturer"):
+            return  'Invalid search field', 400
 
         all_parts = get_csv_convert_to_dict(csv_file_path)
         searched_parts = []
 
-        if search_by and search != "":
+        if search_by or search != "":
             for i in all_parts:
                 if search in i[search_by]:
                     searched_parts.append(i)
@@ -43,7 +51,12 @@ class parts(Resource):
 
 
         sorted_parts = sorted(searched_parts, key=lambda d: d[sort_by], reverse=decending)
-        return sorted_parts, 200
+        paged_parts = [sorted_parts[i:i+page_size] for i in range(0, len(sorted_parts), page_size)]
+
+        if page > len(paged_parts):
+            return 'Out of page bounds', 404
+
+        return paged_parts[page], 200
 
 api.add_resource(parts, '/parts', endpoint='parts')
 
