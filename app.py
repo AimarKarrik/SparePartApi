@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask, request, jsonify
-from flask_restful import Resource, Api, reqparse
-import json, csv, os, pandas
+from flask_restful import Resource, Api
+import json, csv, pandas
 from numpy import argsort
 
 
@@ -9,33 +9,43 @@ from numpy import argsort
 app = Flask(__name__)
 api = Api(app)
 
-def get_csv_convert_to_dict(csv_file_path,):
+def get_csv_convert_to_dict(csv_file_path):
     print("csv to json conversion in progress...")
 
 
-    df = pandas.read_csv(csv_file_path, names=("Id","Serial","Nimi", "L1", "L2", "L3", "L4", "L5", "Sus1", "Sus2", "Tootja", "Hind"), low_memory=False)
-    df.fillna({"Id": 0, "Serial": "Teadmata", "Nimi": "Teadmata", "L1": 0, "L2": 0, "L3": 0, "L4": 0, "L5": 0, "Sus1": 0.0, "Sus2": 0.0, "Tootja": "Teadmata", "Hind": 0.0}, inplace = True)
-    df.astype({"Id": int, "Serial": str, "Nimi": str, "L1": int, "L2": int, "L3": int, "L4": int, "L5": int, "Sus1": float, "Sus2": float, "Tootja": str, "Hind": float})
+    df = pandas.read_csv(csv_file_path, names=("id","serial","name", "storage_1", "storage_2", "storage_3", "storage_4", "storage_5", "sus_1", "sus_2", "manufacturer", "price"), low_memory=False)
+    df.fillna({"id": 0, "serial": "Teadmata", "name": "Teadmata", "storage_1": 0, "storage_2": 0, "storage_3": 0, "storage_4": 0, "storage_5": 0, "sus_1": 0.0, "sus_2": 0.0, "manufacturer": "Teadmata", "price": 0.0}, inplace = True)
+    df.astype({"id": int, "serial": str, "name": str, "storage_1": int, "storage_2": int, "storage_3": int, "storage_4": int, "storage_5": int, "sus_1": float, "sus_2": float, "manufacturer": str, "price": float})
 
     print("Conversion finished.")
     return df.to_dict(orient='records')
 
 csv_file_path = r'data/LE.csv'
 
-sort_by_args = reqparse.RequestParser()
-sort_by_args.add_argument("Field", type=str, help="The field that you want to sort by.")
-sort_by_args.add_argument("Decending", type=bool, help="Is the sort decending")
 
-class sort_by(Resource):
+class parts(Resource):
     def get(self):
         
+        search_by = request.args.get("search_by", type = str, default = "")
+        search = request.args.get("search", type = str, default = "")
+        sort_by = request.args.get("sort_by", type = str, default = "name")
+        decending = request.args.get("decending", type = bool, default = False)
+
         all_parts = get_csv_convert_to_dict(csv_file_path)
-        args = sort_by_args.parse_args()
+        searched_parts = []
 
-        sorted_parts = sorted(all_parts, key=lambda d: d[property], reverse=True)
-        return args , 200
+        if search_by and search != "":
+            for i in all_parts:
+                if search in i[search_by]:
+                    searched_parts.append(i)
+        else:
+            searched_parts = all_parts
 
-api.add_resource(sort_by, '/sortby')
+
+        sorted_parts = sorted(searched_parts, key=lambda d: d[sort_by], reverse=decending)
+        return sorted_parts, 200
+
+api.add_resource(parts, '/parts', endpoint='parts')
 
 
 
