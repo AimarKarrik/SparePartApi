@@ -1,7 +1,7 @@
 # app.py
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_restful import Resource, Api
-import json, csv, pandas
+import pandas
 
 
 
