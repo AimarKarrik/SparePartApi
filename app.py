@@ -36,7 +36,7 @@ class parts(Resource):
             return 'Page size too large', 400
 
 
-        if not(search_by == "name" or search_by == "serial" or search_by == "manufacturer"):
+        if not(search_by == "name" or search_by == "serial" or search_by == "manufacturer" or search_by == ""):
             return  'Invalid search field', 400
 
         all_parts = get_csv_convert_to_dict(csv_file_path)

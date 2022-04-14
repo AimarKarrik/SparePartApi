@@ -14,3 +14,5 @@ Exercise 3 - Varuosade API
 | search | String of the keyword for the search | /parts?search=engine | Returns everything that includes engine in its name | If empty returns all parts |
 | sort_by | String of the sorting category  | /parts?sort_by=name  | Sorts the field by the category | Default value is name |
 | decending | Boolean  | /part?decending=True | Reverses the sort | Default value is false |
+
+
